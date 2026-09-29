@@ -1,0 +1,69 @@
+---
+// ExperienceCard.astro
+interface Props {
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  type: string;
+  achievements: {
+    category: string;
+    description: string;
+    metric?: string;
+  }[];
+  techStack?: string[];
+}
+
+const { role, company, period, location, type, achievements, techStack } = Astro.props;
+---
+
+<div class="tui-box p-5 mb-6 hover:border-[var(--accent-blue)] transition-colors">
+  <!-- Header Bar -->
+  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--border-color)] pb-3 mb-3">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="text-[var(--accent-green)] font-bold text-base md:text-lg">{role}</span>
+        <span class="text-[var(--text-dim)]">@</span>
+        <span class="text-[var(--accent-cyan)] font-bold text-base md:text-lg">{company}</span>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] mt-0.5">
+        <span class="text-[var(--accent-purple)]">[{type}]</span>
+        <span>•</span>
+        <span>{location}</span>
+      </div>
+    </div>
+    
+    <div class="text-xs font-mono text-[var(--accent-yellow)] bg-[var(--bg-canvas)] px-2.5 py-1 border border-[var(--border-color)]">
+      {period}
+    </div>
+  </div>
+
+  <!-- Bulleted achievements with metric highlights -->
+  <div class="space-y-3 text-xs md:text-sm text-[var(--text-main)] font-mono">
+    {achievements.map((item) => (
+      <div class="flex items-start gap-2">
+        <span class="text-[var(--accent-cyan)] select-none mt-0.5">▸</span>
+        <div class="flex-1 leading-relaxed">
+          <strong class="text-[var(--accent-blue)]">{item.category}:</strong> {item.description}
+          {item.metric && (
+            <span class="ml-1 inline-block text-[11px] px-1.5 py-0.2 bg-[var(--bg-highlight)] text-[var(--accent-green)] border border-[var(--border-color)] font-semibold">
+              [{item.metric}]
+            </span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Tech Badges -->
+  {techStack && (
+    <div class="mt-4 pt-3 border-t border-[var(--border-color)] flex flex-wrap items-center gap-1.5 text-xs">
+      <span class="text-[var(--text-dim)] mr-1">Stack:</span>
+      {techStack.map((tech) => (
+        <span class="px-2 py-0.5 bg-[var(--bg-canvas)] border border-[var(--border-color)] text-[var(--text-muted)] text-[11px]">
+          {tech}
+        </span>
+      ))}
+    </div>
+  )}
+</div>

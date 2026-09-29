@@ -1,0 +1,361 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePath?: string;
+}
+
+const {
+  title = "Amrani Ahmed Khalil | Software Engineer (TUI)",
+  description = "Software engineer specializing in clean architecture, developer tooling, CLI systems, and scalable backend/frontend pipelines.",
+  activePath = "~",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Google Font: JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+
+    <!-- Anti-flash inline script for Tokyo Night theme -->
+    <script is:inline>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.add('light');
+        } else if (savedTheme === 'dark') {
+          document.documentElement.classList.remove('light');
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between selection:bg-[#7aa2f7] selection:text-[#16161e] p-2 md:p-6 lg:p-8">
+    
+    <!-- Outer Terminal Enclosure -->
+    <div id="terminal-window" class="w-full max-w-5xl mx-auto tui-box shadow-2xl flex flex-col flex-1 relative overflow-hidden transition-all duration-300">
+      
+      <!-- Top Titlebar / Window Navigation -->
+      <header class="bg-[var(--bg-surface)] border-b border-[var(--border-color)] px-3 py-2 flex flex-wrap items-center justify-between gap-2 select-none text-xs md:text-sm">
+        <div class="flex items-center gap-2">
+          <!-- Window traffic lights -->
+          <div class="flex items-center gap-1.5 mr-2">
+            <span class="w-3 h-3 rounded-full bg-[#f7768e] inline-block hover:opacity-80 cursor-pointer" title="Reset view" id="win-close"></span>
+            <span class="w-3 h-3 rounded-full bg-[#e0af68] inline-block hover:opacity-80 cursor-pointer" title="Toggle scanlines" id="win-min"></span>
+            <span class="w-3 h-3 rounded-full bg-[#73daca] inline-block hover:opacity-80 cursor-pointer" title="Toggle font size" id="win-max"></span>
+          </div>
+
+          <!-- Shell prompt title -->
+          <div class="font-mono flex items-center gap-1 text-[var(--text-muted)]">
+            <span class="text-[var(--accent-green)] font-semibold">ahmed@portfolio</span>
+            <span class="text-[var(--text-dim)]">:</span>
+            <span class="text-[var(--accent-cyan)] font-mono">{activePath}</span>
+            <span class="text-[var(--accent-purple)]">$</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex items-center gap-1 md:gap-2">
+          <a href="/" class={`px-2.5 py-1 text-xs transition-colors border ${activePath === '~' ? 'bg-[var(--bg-elevated)] border-[var(--border-active)] text-[var(--accent-cyan)] font-semibold' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-highlight)]'}`}>
+            [1] ~/home
+          </a>
+          <a href="/projects" class={`px-2.5 py-1 text-xs transition-colors border ${activePath.includes('projects') ? 'bg-[var(--bg-elevated)] border-[var(--border-active)] text-[var(--accent-cyan)] font-semibold' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-highlight)]'}`}>
+            [2] ~/projects
+          </a>
+          <a href="/#experience" class="px-2.5 py-1 text-xs transition-colors border border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-highlight)] hidden sm:inline-block">
+            [3] ~/experience
+          </a>
+          <a href="/#skills" class="px-2.5 py-1 text-xs transition-colors border border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-highlight)] hidden sm:inline-block">
+            [4] ~/skills
+          </a>
+          <a href="/amraniahmedkhalil.pdf" target="_blank" class="px-2.5 py-1 text-xs transition-colors border border-transparent text-[var(--accent-yellow)] hover:bg-[var(--bg-highlight)] font-medium">
+            [CV] ↗
+          </a>
+
+          <!-- Theme switcher -->
+          <button id="theme-btn" class="ml-2 px-2 py-1 border border-[var(--border-color)] bg-[var(--bg-canvas)] text-[var(--text-main)] hover:border-[var(--accent-blue)] text-xs flex items-center gap-1" title="Toggle Dark/Light Mode (Hotkey: T)">
+            <span id="theme-icon">☾</span>
+            <span class="hidden md:inline text-[10px] text-[var(--text-dim)]">[T]</span>
+          </button>
+        </nav>
+      </header>
+
+      <!-- Main Body Content Area -->
+      <main id="main-terminal-buffer" class="flex-1 p-4 md:p-6 lg:p-8 bg-[var(--bg-canvas)] focus:outline-none">
+        <slot />
+      </main>
+
+      <!-- Statusbar (Neovim/Tmux style) -->
+      <footer class="bg-[var(--bg-surface)] border-t border-[var(--border-color)] px-3 py-1.5 text-[11px] font-mono flex flex-wrap items-center justify-between gap-2 text-[var(--text-muted)] select-none">
+        <div class="flex items-center gap-2 md:gap-3">
+          <span class="bg-[var(--accent-blue)] text-[var(--bg-surface)] px-1.5 py-0.5 font-bold tracking-wider">NORMAL</span>
+          <span class="text-[var(--accent-purple)] font-medium flex items-center gap-1">
+            <span>⎇</span> main
+          </span>
+          <span class="hidden sm:inline text-[var(--text-dim)]">|</span>
+          <span class="hidden sm:inline text-[var(--text-muted)]">UTF-8</span>
+          <span class="hidden md:inline text-[var(--text-dim)]">|</span>
+          <span class="hidden md:inline text-[var(--accent-green)]">● READY</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-[var(--text-dim)] hidden sm:inline">Press <kbd class="px-1 py-0.2 bg-[var(--bg-highlight)] text-[var(--accent-cyan)] border border-[var(--border-color)] text-[10px]">/</kbd> for CLI</span>
+          <span id="live-clock" class="text-[var(--text-main)]">00:00:00 UTC</span>
+          <span class="text-[var(--accent-yellow)]">100%</span>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Interactive Command Palette / Modal (Accessible by pressing '/' or clicking CLI) -->
+    <div id="cli-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+      <div class="w-full max-w-xl tui-box bg-[var(--bg-surface)] border-2 border-[var(--border-active)] shadow-2xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between border-b border-[var(--border-color)] pb-2 text-xs">
+          <span class="text-[var(--accent-cyan)] font-mono font-bold">TERMINAL COMMAND INTERPRETER (v1.0)</span>
+          <span class="text-[var(--text-dim)]">[Esc to exit]</span>
+        </div>
+        
+        <div class="flex items-center gap-2 bg-[var(--bg-canvas)] border border-[var(--border-color)] px-3 py-2 text-sm font-mono">
+          <span class="text-[var(--accent-green)] font-bold">ahmed@cli:~$</span>
+          <input 
+            type="text" 
+            id="cli-input" 
+            placeholder="Type 'help', 'projects', 'cat cv.txt', 'skills', 'theme', 'clear'..." 
+            class="flex-1 bg-transparent border-none text-[var(--text-main)] outline-none font-mono placeholder:text-[var(--text-dim)] text-sm"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <!-- Suggestions / Shortcuts -->
+        <div class="flex flex-wrap gap-1.5 text-xs text-[var(--text-muted)] pt-1">
+          <span class="text-[var(--text-dim)]">Quick commands:</span>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="help">help</button>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="projects">projects</button>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="whoami">whoami</button>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="skills">skills</button>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="theme">theme</button>
+          <button class="cli-quick-cmd px-1.5 py-0.5 border border-[var(--border-color)] hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]" data-cmd="contact">contact</button>
+        </div>
+
+        <div id="cli-output" class="bg-[var(--bg-canvas)] border border-[var(--border-color)] p-3 text-xs font-mono max-h-48 overflow-y-auto hidden text-[var(--text-main)] whitespace-pre-wrap leading-relaxed">
+        </div>
+      </div>
+    </div>
+
+    <!-- Client-side script for interactions, clock, theme toggle, and keyboard shortcuts -->
+    <script>
+      // Live Clock
+      function updateClock() {
+        const now = new Date();
+        const clockEl = document.getElementById('live-clock');
+        if (clockEl) {
+          clockEl.textContent = now.toTimeString().split(' ')[0] + ' LOCAL';
+        }
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // Theme Toggle Logic
+      const themeBtn = document.getElementById('theme-btn');
+      const themeIcon = document.getElementById('theme-icon');
+
+      function syncThemeIcon() {
+        const isLight = document.documentElement.classList.contains('light');
+        if (themeIcon) {
+          themeIcon.textContent = isLight ? '☼' : '☾';
+        }
+      }
+      syncThemeIcon();
+
+      function toggleTheme() {
+        const isLight = document.documentElement.classList.toggle('light');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        syncThemeIcon();
+      }
+
+      themeBtn?.addEventListener('click', toggleTheme);
+
+      // Window Action Buttons
+      document.getElementById('win-min')?.addEventListener('click', () => {
+        document.body.classList.toggle('scanlines');
+      });
+
+      document.getElementById('win-close')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('win-max')?.addEventListener('click', () => {
+        const win = document.getElementById('terminal-window');
+        win?.classList.toggle('max-w-7xl');
+      });
+
+      // Command Interpreter Modal
+      const cliModal = document.getElementById('cli-modal');
+      const cliInput = document.getElementById('cli-input') as HTMLInputElement | null;
+      const cliOutput = document.getElementById('cli-output');
+
+      function openCli() {
+        if (!cliModal || !cliInput) return;
+        cliModal.classList.remove('hidden');
+        cliInput.focus();
+        cliInput.value = '';
+      }
+
+      function closeCli() {
+        if (!cliModal) return;
+        cliModal.classList.add('hidden');
+      }
+
+      // Quick CLI commands buttons
+      document.querySelectorAll('.cli-quick-cmd').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const cmd = (e.currentTarget as HTMLElement).getAttribute('data-cmd');
+          if (cmd && cliInput) {
+            cliInput.value = cmd;
+            runCliCommand(cmd);
+          }
+        });
+      });
+
+      function runCliCommand(rawCmd: string) {
+        if (!cliOutput) return;
+        const cmd = rawCmd.trim().toLowerCase();
+        cliOutput.classList.remove('hidden');
+
+        let response = '';
+        if (cmd === 'help') {
+          response = [
+            'AVAILABLE COMMANDS:',
+            '  help        - Show this manual',
+            '  whoami      - Display engineer dossier and system spec',
+            '  projects    - List all case studies & architectures',
+            '  skills      - Print verified engineering proficiencies',
+            '  cat cv.txt  - View formatted CV summary',
+            '  contact     - Display email, GitHub, and communication links',
+            '  theme       - Toggle Tokyo Night dark / light palette',
+            '  scanlines   - Toggle CRT scanline overlay',
+            '  clear       - Clear this terminal output buffer',
+            '  exit        - Close command window',
+          ].join('\n');
+        } else if (cmd === 'whoami' || cmd === 'neofetch') {
+          response = [
+            'AMRANI Ahmed Khalil — Software Engineer',
+            'Specialization: Clean Architecture, CLI Tooling, Distributed Messaging',
+            'Location: Algeria / Remote',
+            'Languages: TypeScript, JavaScript, Python, C',
+            'Core Stack: Bun, RabbitMQ, PostgreSQL, Redis, Next.js, Docker',
+          ].join('\n');
+        } else if (cmd === 'projects' || cmd === 'ls projects') {
+          response = [
+            'ACTIVE CASE STUDIES:',
+            '  1. Notiq        → Multi-tenant RabbitMQ/Bun Notification Engine (/projects/notiq)',
+            '  2. Inovask CLI  → Two-Phase Schema UI Generator & Docker CLI (/projects/inovask-cli)',
+            '  3. Quiz AI      → Gemini 2.0 Academic Assessment Engine (/projects/academic-quiz-ai)',
+            '  4. ISO Voyage   → High-Velocity Monolith Refactor & B2B Messaging (/projects/iso-voyage)',
+            '',
+            'Redirecting to ~/projects in 1s...',
+          ].join('\n');
+          setTimeout(() => { window.location.href = '/projects'; }, 1000);
+        } else if (cmd === 'skills') {
+          response = [
+            'ENGINEERING PROFICIENCIES:',
+            '  • Languages : TypeScript, JavaScript, Python, C',
+            '  • Backend   : Bun, Node.js, Express.js, RabbitMQ, Redis, Knex, Prisma',
+            '  • Databases : PostgreSQL, MongoDB, Redis',
+            '  • Frontend  : React.js, Next.js, Redux, Tailwind CSS',
+            '  • DevOps    : Docker, Docker Compose, Git, Cypress E2E',
+          ].join('\n');
+        } else if (cmd === 'contact') {
+          response = [
+            'COMMUNICATION CHANNELS:',
+            '  • Email   : career.amraniahmedkhalil@gmail.com',
+            '  • GitHub  : https://github.com/ahmedkhalilexe',
+            '  • Phone   : +213-698479664',
+          ].join('\n');
+        } else if (cmd === 'theme' || cmd === 'theme toggle') {
+          toggleTheme();
+          response = 'Theme toggled successfully.';
+        } else if (cmd === 'scanlines') {
+          document.body.classList.toggle('scanlines');
+          response = 'CRT scanline filter toggled.';
+        } else if (cmd === 'cat cv.txt') {
+          response = [
+            'CV DOWNLOAD: Direct PDF available at /amraniahmedkhalil.pdf',
+            'Software Engineer with experience across frontend, backend, and developer tooling.',
+            'Own CLI tooling that scaffolds schema-driven apps, raised Cypress test rate to 100%.',
+          ].join('\n');
+        } else if (cmd === 'clear') {
+          cliOutput.textContent = '';
+          cliOutput.classList.add('hidden');
+          return;
+        } else if (cmd === 'exit' || cmd === 'quit') {
+          closeCli();
+          return;
+        } else {
+          response = `zsh: command not found: ${rawCmd}\nType 'help' for available commands.`;
+        }
+
+        cliOutput.textContent = `> ${rawCmd}\n\n${response}`;
+      }
+
+      cliInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          runCliCommand(cliInput.value);
+        } else if (e.key === 'Escape') {
+          closeCli();
+        }
+      });
+
+      cliModal?.addEventListener('click', (e) => {
+        if (e.target === cliModal) closeCli();
+      });
+
+      // Global Keybindings Listener
+      window.addEventListener('keydown', (e) => {
+        // Ignore if user is inside an input/textarea
+        if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
+          if (e.key === 'Escape') closeCli();
+          return;
+        }
+
+        if (e.key === '/') {
+          e.preventDefault();
+          openCli();
+        } else if (e.key === 't' || e.key === 'T') {
+          toggleTheme();
+        } else if (e.key === '1') {
+          window.location.href = '/';
+        } else if (e.key === '2') {
+          window.location.href = '/projects';
+        } else if (e.key === '3') {
+          window.location.href = '/#experience';
+        } else if (e.key === '4') {
+          window.location.href = '/#skills';
+        } else if (e.key === 'j') {
+          window.scrollBy({ top: 120, behavior: 'smooth' });
+        } else if (e.key === 'k') {
+          window.scrollBy({ top: -120, behavior: 'smooth' });
+        } else if (e.key === '?') {
+          openCli();
+          if (cliInput) {
+            cliInput.value = 'help';
+            runCliCommand('help');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

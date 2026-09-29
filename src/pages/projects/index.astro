@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout activePath="~/projects" title="Case Studies & System Design | AMRANI Ahmed Khalil">
+  <!-- Header / Breadcrumbs -->
+  <div class="border-b border-[var(--border-color)] pb-4 mb-8">
+    <div class="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] mb-2">
+      <a href="/" class="hover:text-[var(--accent-cyan)]">~ (home)</a>
+      <span>/</span>
+      <span class="text-[var(--accent-cyan)] font-bold">projects</span>
+    </div>
+    
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-xl md:text-2xl font-bold font-mono text-[var(--accent-cyan)]">
+          System Designs & Project Case Studies
+        </h1>
+        <p class="text-xs md:text-sm font-mono text-[var(--text-muted)] mt-1">
+          Detailed technical breakdowns, architectural topology diagrams, trade-off analyses, and engineering metrics.
+        </p>
+      </div>
+
+      <div class="text-xs font-mono text-[var(--text-dim)] border border-[var(--border-color)] px-3 py-1.5 bg-[var(--bg-surface)]">
+        Found: <span class="text-[var(--accent-green)] font-bold">{sortedProjects.length} records</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Line Preview -->
+  <div class="bg-[var(--bg-surface)] border border-[var(--border-color)] p-3 text-xs font-mono mb-8 text-[var(--text-muted)] flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-[var(--accent-green)]">$</span>
+      <span class="text-[var(--text-main)]">tree -L 2 ./src/content/projects/</span>
+    </div>
+    <span class="text-[var(--text-dim)]">[Select any project to inspect its case study]</span>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {sortedProjects.map((project) => (
+      <ProjectCard
+        slug={project.id}
+        title={project.data.title}
+        tagline={project.data.tagline}
+        role={project.data.role}
+        status={project.data.status}
+        tags={project.data.tags}
+        metrics={project.data.metrics}
+        architectureType={project.data.architectureType}
+        featured={project.data.featured}
+      />
+    ))}
+  </div>
+
+  <!-- Bottom Terminal Back Navigation -->
+  <div class="mt-12 pt-6 border-t border-[var(--border-color)] flex items-center justify-between font-mono text-xs">
+    <a href="/" class="tui-btn">
+      <span>← cd .. (Return Home)</span>
+    </a>
+
+    <span class="text-[var(--text-dim)]">
+      EOF: ~/projects
+    </span>
+  </div>
+</BaseLayout>

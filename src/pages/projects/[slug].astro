@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const sorted = projects.sort((a, b) => a.data.order - b.data.order);
+  
+  return sorted.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      prevProject: index > 0 ? sorted[index - 1] : null,
+      nextProject: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
+  }));
+}
+
+const { project, prevProject, nextProject } = Astro.props;
+const { Content } = await render(project);
+
+const statusColors: Record<string, string> = {
+  'In Progress': 'border-[#e0af68] text-[#e0af68]',
+  'Production': 'border-[#73daca] text-[#73daca]',
+  'Completed': 'border-[#7aa2f7] text-[#7aa2f7]',
+  'Active': 'border-[#bb9af7] text-[#bb9af7]',
+};
+---
+
+<BaseLayout activePath={`~/projects/${project.id}`} title={`${project.data.title} | Case Study • AMRANI Ahmed Khalil`}>
+  <!-- Top Breadcrumb & Shell Bar -->
+  <div class="border-b border-[var(--border-color)] pb-4 mb-6">
+    <div class="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] mb-3">
+      <a href="/" class="hover:text-[var(--accent-cyan)]">~</a>
+      <span>/</span>
+      <a href="/projects" class="hover:text-[var(--accent-cyan)]">projects</a>
+      <span>/</span>
+      <span class="text-[var(--accent-cyan)] font-bold">{project.id}.md</span>
+    </div>
+
+    <!-- Case Study Title Block -->
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <span class={`text-[11px] uppercase font-mono px-2 py-0.5 border ${statusColors[project.data.status] || 'border-[var(--border-color)]'}`}>
+            ● {project.data.status}
+          </span>
+          {project.data.architectureType && (
+            <span class="text-[11px] font-mono text-[var(--accent-purple)] bg-[var(--bg-surface)] border border-[var(--border-color)] px-2 py-0.5">
+              {project.data.architectureType}
+            </span>
+          )}
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold font-mono text-[var(--accent-cyan)] tracking-tight">
+          {project.data.title}
+        </h1>
+        <p class="text-sm md:text-base font-mono text-[var(--text-muted)] mt-1">
+          {project.data.tagline}
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2 font-mono text-xs">
+        <a href="/projects" class="tui-btn">
+          <span>cd ..</span>
+        </a>
+        <button id="copy-url-btn" class="tui-btn">
+          <span id="copy-text">Share URI</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Metadata Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t border-[var(--border-color)] text-xs font-mono">
+      <div class="bg-[var(--bg-surface)] p-2.5 border border-[var(--border-color)]">
+        <div class="text-[var(--text-dim)] uppercase text-[10px]">Role</div>
+        <div class="text-[var(--text-main)] font-semibold mt-0.5">{project.data.role}</div>
+      </div>
+      <div class="bg-[var(--bg-surface)] p-2.5 border border-[var(--border-color)]">
+        <div class="text-[var(--text-dim)] uppercase text-[10px]">Timeline</div>
+        <div class="text-[var(--accent-yellow)] font-semibold mt-0.5">{project.data.period}</div>
+      </div>
+      <div class="bg-[var(--bg-surface)] p-2.5 border border-[var(--border-color)] col-span-2">
+        <div class="text-[var(--text-dim)] uppercase text-[10px]">Technologies</div>
+        <div class="text-[var(--text-muted)] truncate mt-0.5">{project.data.tags.join(' • ')}</div>
+      </div>
+    </div>
+
+    <!-- Highlighted Metrics -->
+    {project.data.metrics && project.data.metrics.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-3 text-xs font-mono">
+        {project.data.metrics.map((metric) => (
+          <div class="bg-[var(--bg-canvas)] border border-[var(--border-color)] px-2.5 py-1 text-[var(--accent-green)] flex items-center gap-1.5">
+            <span class="text-[var(--accent-yellow)]">⚡</span>
+            <span>{metric}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- Rendered Markdown Article Body -->
+  <article class="tui-prose font-mono text-sm leading-relaxed max-w-none">
+    <Content />
+  </article>
+
+  <!-- Navigation Footer (Previous / Next Case Studies) -->
+  <div class="mt-12 pt-6 border-t border-[var(--border-color)] font-mono text-xs">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {prevProject ? (
+        <a href={`/projects/${prevProject.id}`} class="tui-box p-3 hover:border-[var(--accent-cyan)] group transition-colors">
+          <div class="text-[var(--text-dim)] text-[10px]">← PREVIOUS CASE STUDY</div>
+          <div class="text-[var(--accent-blue)] group-hover:text-[var(--accent-cyan)] font-bold mt-1">
+            {prevProject.data.title}
+          </div>
+        </a>
+      ) : <div />}
+
+      {nextProject ? (
+        <a href={`/projects/${nextProject.id}`} class="tui-box p-3 text-right hover:border-[var(--accent-cyan)] group transition-colors">
+          <div class="text-[var(--text-dim)] text-[10px]">NEXT CASE STUDY →</div>
+          <div class="text-[var(--accent-blue)] group-hover:text-[var(--accent-cyan)] font-bold mt-1">
+            {nextProject.data.title}
+          </div>
+        </a>
+      ) : <div />}
+    </div>
+
+    <div class="mt-6 flex items-center justify-between text-[var(--text-dim)]">
+      <a href="/projects" class="hover:text-[var(--accent-cyan)] flex items-center gap-1">
+        <span>cd ~/projects</span>
+      </a>
+      <span>EOF: {project.id}.md</span>
+    </div>
+  </div>
+
+  <script>
+    const copyBtn = document.getElementById('copy-url-btn');
+    const copyText = document.getElementById('copy-text');
+    copyBtn?.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href);
+      if (copyText) {
+        copyText.textContent = 'URI Copied!';
+        setTimeout(() => {
+          copyText.textContent = 'Share URI';
+        }, 2000);
+      }
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,149 @@
+---
+// AsciiHero.astro
+---
+
+<section class="border-b border-[var(--border-color)] pb-8 mb-8">
+  <!-- Command line invocation header -->
+  <div class="flex items-center gap-2 text-xs text-[var(--text-dim)] font-mono mb-4">
+    <span class="text-[var(--accent-green)]">ahmed@workstation</span>
+    <span>:</span>
+    <span class="text-[var(--accent-cyan)]">~</span>
+    <span class="text-[var(--accent-purple)]">$</span>
+    <span class="text-[var(--text-main)] font-semibold">neofetch --profile=engineer</span>
+    <span class="terminal-cursor"></span>
+  </div>
+
+  <!-- Neofetch TUI Split Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+    <!-- ASCII Art Block (Left) -->
+    <div class="lg:col-span-5 bg-[var(--bg-surface)] border border-[var(--border-color)] p-4 text-[10px] md:text-xs leading-none select-none font-mono text-[var(--accent-blue)] overflow-x-auto shadow-inner">
+<pre class="font-mono text-center">
+  █████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗██╗
+ ██╔══██╗████╗ ████║██╔══██╗██╔══██╗████╗  ██║██║
+ ███████║██╔████╔██║██████╔╝███████║██╔██╗ ██║██║
+ ██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║██║╚██╗██║██║
+ ██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║██║ ╚████║██║
+ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝
+   ─── [ SOFTWARE ENGINEER & SYSTEMS BUILDER ] ───
+</pre>
+      <div class="mt-3 pt-3 border-t border-[var(--border-color)] flex justify-center gap-1.5 text-center text-xs">
+        <span class="w-3 h-3 bg-[#1a1b26] border border-[#7aa2f7] inline-block" title="tokyo-bg"></span>
+        <span class="w-3 h-3 bg-[#7aa2f7] inline-block" title="blue"></span>
+        <span class="w-3 h-3 bg-[#7dcfff] inline-block" title="cyan"></span>
+        <span class="w-3 h-3 bg-[#bb9af7] inline-block" title="purple"></span>
+        <span class="w-3 h-3 bg-[#73daca] inline-block" title="green"></span>
+        <span class="w-3 h-3 bg-[#e0af68] inline-block" title="yellow"></span>
+        <span class="w-3 h-3 bg-[#ff9e64] inline-block" title="orange"></span>
+        <span class="w-3 h-3 bg-[#f7768e] inline-block" title="red"></span>
+      </div>
+    </div>
+
+    <!-- Metadata Dossier (Right) -->
+    <div class="lg:col-span-7 flex flex-col justify-between space-y-3 font-mono text-xs md:text-sm">
+      <div class="border-b border-[var(--border-color)] pb-2">
+        <h1 class="text-xl md:text-2xl font-bold text-[var(--accent-cyan)] tracking-tight">
+          AMRANI Ahmed Khalil
+        </h1>
+        <div class="text-[var(--text-muted)] text-xs mt-1 flex items-center gap-1 font-mono">
+          <span class="text-[var(--accent-purple)]">&gt;</span>
+          <span id="typewriter-text" class="text-[var(--accent-yellow)]">Software Engineer</span>
+          <span class="terminal-cursor"></span>
+        </div>
+      </div>
+
+      <div class="space-y-1.5 text-xs text-[var(--text-main)]">
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Specialty:</span>
+          <span>Clean Architecture, Multi-Tenant SaaS, CLI Engines</span>
+        </div>
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Current:</span>
+          <span class="text-[var(--accent-green)]">Software Engineer @ Inovask (CLI & Architecture)</span>
+        </div>
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Languages:</span>
+          <span>TypeScript, JavaScript, Python, C</span>
+        </div>
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Core Stack:</span>
+          <span>Bun, RabbitMQ, PostgreSQL, Redis, Docker, React/Next.js</span>
+        </div>
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Location:</span>
+          <span class="text-[var(--text-muted)]">Chlef, Algeria (Available for Remote Worldwide)</span>
+        </div>
+        <div class="flex items-start">
+          <span class="w-24 text-[var(--accent-purple)] font-semibold">Education:</span>
+          <span>B.Sc. in Computer Science (Univ. Hassiba Ben Bouali, 2025)</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="pt-3 flex flex-wrap gap-2">
+        <a href="/projects" class="tui-btn tui-btn-primary">
+          <span>⚡ Explore Case Studies</span>
+          <span class="text-xs">→</span>
+        </a>
+        <a href="mailto:career.amraniahmedkhalil@gmail.com" class="tui-btn">
+          <span>✉ Send Dispatch</span>
+        </a>
+        <a href="https://github.com/ahmedkhalilexe" target="_blank" rel="noopener noreferrer" class="tui-btn">
+          <span>🐙 ahmedkhalilexe</span>
+          <span class="text-xs text-[var(--text-dim)]">↗</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Terminal Personality Bio Quote -->
+  <div class="mt-6 p-3 bg-[var(--bg-surface)] border-l-2 border-[var(--accent-cyan)] text-xs text-[var(--text-muted)] leading-relaxed">
+    <span class="text-[var(--accent-cyan)] font-bold">[ABOUT_ME]</span>: 
+    Software engineer with end-to-end experience across developer tooling, distributed messaging, and schema-driven frontends. Owned the CLI tooling orchestrating tenant generation at Inovask, raised automated E2E test pass rates from ~50% to 100%, and architected zero-hardcoded dynamic UI compilers. Passionate about clean architecture, measurable reliability, and terminal-first developer experiences.
+  </div>
+</section>
+
+<script>
+  const titles = [
+    "Software Engineer",
+    "CLI Tooling & Generator Owner",
+    "Clean Architecture & DDD Practitioner",
+    "Distributed Messaging (RabbitMQ / Redis)",
+    "Bun & TypeScript Enthusiast"
+  ];
+
+  let currentTitleIndex = 0;
+  let currentCharIndex = 0;
+  let isDeleting = false;
+  const typewriterEl = document.getElementById("typewriter-text");
+
+  function typeEffect() {
+    if (!typewriterEl) return;
+    const currentTitle = titles[currentTitleIndex];
+
+    if (isDeleting) {
+      typewriterEl.textContent = currentTitle.substring(0, currentCharIndex - 1);
+      currentCharIndex--;
+    } else {
+      typewriterEl.textContent = currentTitle.substring(0, currentCharIndex + 1);
+      currentCharIndex++;
+    }
+
+    let delay = isDeleting ? 35 : 75;
+
+    if (!isDeleting && currentCharIndex === currentTitle.length) {
+      delay = 2200; // Pause at full word
+      isDeleting = true;
+    } else if (isDeleting && currentCharIndex === 0) {
+      isDeleting = false;
+      currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+      delay = 400; // Pause before typing next
+    }
+
+    setTimeout(typeEffect, delay);
+  }
+
+  // Start typewriter on load
+  typeEffect();
+</script>

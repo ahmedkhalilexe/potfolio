@@ -1,0 +1,91 @@
+---
+// ProjectCard.astro
+interface Props {
+  slug: string;
+  title: string;
+  tagline: string;
+  role: string;
+  status: 'Active' | 'Completed' | 'In Progress' | 'Production';
+  tags: string[];
+  metrics?: string[];
+  architectureType?: string;
+  featured?: boolean;
+}
+
+const { slug, title, tagline, role, status, tags, metrics, architectureType, featured } = Astro.props;
+
+const statusColors: Record<string, string> = {
+  'In Progress': 'border-[#e0af68] text-[#e0af68]',
+  'Production': 'border-[#73daca] text-[#73daca]',
+  'Completed': 'border-[#7aa2f7] text-[#7aa2f7]',
+  'Active': 'border-[#bb9af7] text-[#bb9af7]',
+};
+---
+
+<div class={`tui-box p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${featured ? 'border-[var(--border-active)]' : ''}`}>
+  <div>
+    <!-- Card Header -->
+    <div class="flex items-center justify-between gap-2 border-b border-[var(--border-color)] pb-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-[var(--text-dim)] font-mono">pkg/</span>
+        <h3 class="text-base md:text-lg font-bold text-[var(--accent-cyan)] font-mono">
+          {title}
+        </h3>
+      </div>
+      <span class={`text-[10px] uppercase font-mono px-2 py-0.5 border ${statusColors[status] || 'border-[var(--border-color)]'}`}>
+        ● {status}
+      </span>
+    </div>
+
+    <!-- Tagline & Role -->
+    <p class="text-xs md:text-sm text-[var(--text-main)] mb-2 font-mono leading-relaxed">
+      {tagline}
+    </p>
+    <div class="text-[11px] text-[var(--text-muted)] font-mono mb-3">
+      <span class="text-[var(--text-dim)]">Role:</span> {role}
+      {architectureType && (
+        <span class="ml-2 pl-2 border-l border-[var(--border-color)] text-[var(--accent-purple)]">
+          {architectureType}
+        </span>
+      )}
+    </div>
+
+    <!-- Metrics Callouts -->
+    {metrics && metrics.length > 0 && (
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mb-4">
+        {metrics.map((metric) => (
+          <div class="bg-[var(--bg-canvas)] border border-[var(--border-color)] px-2 py-1 text-[11px] font-mono text-[var(--accent-green)] flex items-center gap-1.5">
+            <span class="text-[var(--accent-yellow)]">⚡</span>
+            <span>{metric}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div>
+    <!-- Tech Tags -->
+    <div class="flex flex-wrap gap-1 mb-4 pt-2 border-t border-[var(--border-color)]">
+      {tags.slice(0, 6).map((tag) => (
+        <span class="text-[10px] font-mono px-1.5 py-0.5 bg-[var(--bg-canvas)] border border-[var(--border-color)] text-[var(--text-muted)]">
+          #{tag}
+        </span>
+      ))}
+      {tags.length > 6 && (
+        <span class="text-[10px] font-mono px-1.5 py-0.5 text-[var(--text-dim)]">
+          +{tags.length - 6} more
+        </span>
+      )}
+    </div>
+
+    <!-- Enter Case Study CTA -->
+    <a href={`/projects/${slug}`} class="tui-btn w-full justify-between group">
+      <span class="font-mono text-xs text-[var(--accent-blue)] group-hover:text-[var(--accent-cyan)] font-semibold">
+        $ cat case-study.md
+      </span>
+      <span class="text-xs text-[var(--accent-purple)] group-hover:translate-x-1 transition-transform">
+        [ENTER →]
+      </span>
+    </a>
+  </div>
+</div>

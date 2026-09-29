@@ -1,0 +1,99 @@
+---
+// SkillsGrid.astro
+const skillCategories = [
+  {
+    category: "Languages",
+    icon: "λ",
+    items: [
+      { name: "TypeScript", level: "Production / Core" },
+      { name: "JavaScript (ESNext)", level: "Production / Core" },
+      { name: "Python", level: "Scripting & Tooling" },
+      { name: "C", level: "Foundations & Systems" },
+    ],
+  },
+  {
+    category: "Backend & Systems",
+    icon: "⚙",
+    items: [
+      { name: "Bun & Node.js", level: "Runtimes" },
+      { name: "Express.js", level: "REST API Design" },
+      { name: "RabbitMQ", level: "AMQP Message Brokers" },
+      { name: "Redis", level: "Caching & Rate Limiting" },
+    ],
+  },
+  {
+    category: "Databases & ORMs",
+    icon: "⛁",
+    items: [
+      { name: "PostgreSQL", level: "Relational Modeling & Indexes" },
+      { name: "MongoDB", level: "Document Storage" },
+      { name: "Prisma ORM", level: "Schema Migrations" },
+      { name: "Knex.js", level: "Query Builder & Isolation" },
+    ],
+  },
+  {
+    category: "Frontend Architecture",
+    icon: "❖",
+    items: [
+      { name: "React.js", level: "Component Trees & Hooks" },
+      { name: "Next.js (App & Pages)", level: "Full-Stack Web" },
+      { name: "Tailwind CSS", level: "Design Systems & Theming" },
+      { name: "Redux / Redux Toolkit", level: "Predictable State Trees" },
+    ],
+  },
+  {
+    category: "DevOps & Developer Tooling",
+    icon: "⚡",
+    items: [
+      { name: "CLI Development", level: "Tooling & Scaffolding Ownership" },
+      { name: "Docker & Compose", level: "Container Orchestration" },
+      { name: "Cypress", level: "E2E Testing (50% → 100%)" },
+      { name: "Git & CI/CD", level: "Workflows & Collaboration" },
+    ],
+  },
+  {
+    category: "Methodologies & Spoken",
+    icon: "★",
+    items: [
+      { name: "Clean Architecture & DDD", level: "Decoupled Hexagonal Design" },
+      { name: "System Design", level: "Multi-Tenant SaaS Patterns" },
+      { name: "English", level: "Advanced Professional" },
+      { name: "Arabic", level: "Native" },
+    ],
+  },
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {skillCategories.map((cat) => (
+    <div class="tui-box p-4 flex flex-col justify-between hover:border-[var(--accent-cyan)] transition-colors">
+      <div>
+        <div class="flex items-center gap-2 border-b border-[var(--border-color)] pb-2 mb-3">
+          <span class="text-[var(--accent-purple)] font-mono text-sm">{cat.icon}</span>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-cyan)]">
+            {cat.category}
+          </h4>
+        </div>
+
+        <ul class="space-y-2 text-xs font-mono">
+          {cat.items.map((item) => (
+            <li class="flex items-baseline justify-between gap-2">
+              <span class="text-[var(--text-main)] font-medium flex items-center gap-1.5">
+                <span class="text-[var(--accent-green)] text-[10px]">■</span>
+                {item.name}
+              </span>
+              <span class="text-[10px] text-[var(--text-dim)] truncate">
+                {item.level}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-4 pt-2 border-t border-[var(--border-color)] text-[10px] font-mono text-[var(--text-dim)] flex items-center justify-between">
+        <span>status: verified</span>
+        <span class="text-[var(--accent-green)]">● ok</span>
+      </div>
+    </div>
+  ))}
+</div>
