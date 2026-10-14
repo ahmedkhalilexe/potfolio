@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Production Cloudflare URL (or your custom domain when attached)
-  site: 'https://potfolio-khalil.amraniahmedkhalil.workers.dev',
+  // Production Cloudflare Pages URL
+  site: 'https://potfolio-khalil.pages.dev',
 
   integrations: [sitemap()],
 
