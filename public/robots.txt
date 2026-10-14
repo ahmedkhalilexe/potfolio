@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# PLACEHOLDER: Ensure this domain matches your site URL in astro.config.mjs
-Sitemap: https://amrani.dev/sitemap-index.xml
+Sitemap: https://potfolio-khalil.amraniahmedkhalil.workers.dev/sitemap-index.xml

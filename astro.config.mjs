@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // PLACEHOLDER: Replace 'https://amrani.dev' with your real production domain or Cloudflare Pages URL (e.g. 'https://portfolio-xxx.pages.dev')
-  site: 'https://amrani.dev',
+  // Production Cloudflare URL (or your custom domain when attached)
+  site: 'https://potfolio-khalil.amraniahmedkhalil.workers.dev',
 
   integrations: [sitemap()],
 
