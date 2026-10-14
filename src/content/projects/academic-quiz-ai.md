@@ -6,7 +6,18 @@ period: "Oct 2024 – May 2025"
 status: "Completed"
 featured: true
 order: 3
-tags: ["Next.js", "Gemini 2.0", "TypeScript", "Redux", "Node.js", "Express.js", "Prisma", "PostgreSQL", "Tailwind CSS"]
+tags:
+  [
+    "Next.js",
+    "Gemini 2.0",
+    "TypeScript",
+    "Redux",
+    "Node.js",
+    "Express.js",
+    "Prisma",
+    "PostgreSQL",
+    "Tailwind CSS",
+  ]
 metrics:
   - "10+ REST API Endpoints"
   - "Gemini 2.0 automated question generation"
@@ -14,7 +25,7 @@ metrics:
   - "Real-time grading & analytical reviews"
 architectureType: "LLM-Integrated Full-Stack Web Platform"
 # PLACEHOLDER: Replace with your real Academic Quiz platform repository URL
-github: "https://github.com/ahmedkhalilexe/academic-quiz-platform"
+github: "https://github.com/ahmedkhalilexe/StudyFlow"
 ---
 
 # Academic Resource Platform with Gemini 2.0 AI Quiz Engine
@@ -99,6 +110,7 @@ Return ONLY valid JSON adhering to the specified schema:
 ---
 
 ## 4. Key Takeaways & Results
+
 - Reduced quiz creation time for educators from **~45 minutes** to **under 20 seconds**.
 - Delivered an interactive student quiz-taking interface with instant score breakdowns and contextual explanations for missed questions.
 - Built a modular, clean codebase demonstrating full-stack engineering proficiency across client state, API boundaries, and LLM orchestration.
