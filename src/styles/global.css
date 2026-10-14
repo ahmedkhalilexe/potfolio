@@ -255,12 +255,44 @@ html.light .astro-code span {
   background-color: var(--shiki-light-bg, #f4f5f9) !important;
 }
 
-.astro-code {
+.astro-code,
+.tui-prose pre {
   border: 1px solid var(--border-color);
-  padding: 1.25rem !important;
-  font-size: 0.85rem !important;
-  line-height: 1.6 !important;
+  padding: 0.85rem !important;
+  font-size: 0.72rem !important;
+  line-height: 1.35 !important;
   border-radius: 0px;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .astro-code,
+  .tui-prose pre {
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+    padding: 1rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .astro-code,
+  .tui-prose pre {
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+    padding: 1.25rem !important;
+  }
+}
+
+/* Scroll indicator on mobile */
+@media (max-width: 640px) {
+  .tui-prose pre {
+    position: relative;
+    border-left: 2px solid var(--accent-purple);
+  }
 }
 
 /* Micro-animations */

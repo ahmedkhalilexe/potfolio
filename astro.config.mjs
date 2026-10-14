@@ -19,7 +19,7 @@ export default defineConfig({
         dark: 'tokyo-night',
         light: 'github-light',
       },
-      wrap: true,
+      wrap: false,
     },
   },
 });

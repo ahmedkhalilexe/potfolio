@@ -111,8 +111,17 @@ const statusColors: Record<string, string> = {
     )}
   </div>
 
+  <!-- Mobile Diagram Scroll Notice -->
+  <div class="sm:hidden flex items-center justify-between text-[11px] font-mono text-[var(--text-dim)] bg-[var(--bg-surface)] border border-[var(--border-color)] px-3 py-1.5 mb-4">
+    <span class="flex items-center gap-1.5 text-[var(--accent-purple)]">
+      <span>↔</span>
+      <span>System diagrams scroll horizontally</span>
+    </span>
+    <span class="text-[10px] text-[var(--text-dim)]">[swipe to explore]</span>
+  </div>
+
   <!-- Rendered Markdown Article Body -->
-  <article class="tui-prose font-mono text-sm leading-relaxed max-w-none">
+  <article class="tui-prose font-mono text-sm leading-relaxed max-w-none min-w-0 overflow-x-hidden">
     <Content />
   </article>
 
