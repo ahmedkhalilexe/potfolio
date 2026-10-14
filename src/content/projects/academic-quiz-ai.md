@@ -13,6 +13,8 @@ metrics:
   - "Role-based Teacher & Student workflows"
   - "Real-time grading & analytical reviews"
 architectureType: "LLM-Integrated Full-Stack Web Platform"
+# PLACEHOLDER: Replace with your real Academic Quiz platform repository URL
+github: "https://github.com/ahmedkhalilexe/academic-quiz-platform"
 ---
 
 # Academic Resource Platform with Gemini 2.0 AI Quiz Engine

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout activePath="~/404" title="404: Not Found | AMRANI ahmed khalil">
+  <div class="py-12 px-4 flex flex-col items-center justify-center text-center font-mono">
+    
+    <!-- ASCII 404 Art Block -->
+    <div class="bg-[var(--bg-surface)] border border-[var(--accent-red)] p-4 sm:p-6 mb-8 text-[9px] sm:text-xs select-none text-[var(--accent-red)] shadow-lg max-w-full overflow-x-auto">
+<pre class="font-mono leading-tight">
+ ██╗  ██╗ ██████╗ ██╗  ██╗
+ ██║  ██║██╔═████╗██║  ██║
+ ███████║██║██╔██║███████║
+ ╚════██║████╔╝██║╚════██║
+      ██║╚██████╔╝     ██║
+      ╚═╝ ╚═════╝      ╚═╝
+ ─── [ ERROR 404: BUFFER NOT FOUND ] ───
+</pre>
+    </div>
+
+    <!-- Error explanation terminal prompt -->
+    <div class="max-w-xl w-full bg-[var(--bg-surface)] border border-[var(--border-color)] p-4 sm:p-5 text-left text-xs mb-8 space-y-2">
+      <div class="flex items-center gap-2 text-[var(--text-muted)]">
+        <span class="text-[var(--accent-green)]">khalil@portfolio</span>
+        <span>:</span>
+        <span class="text-[var(--accent-cyan)]">~</span>
+        <span class="text-[var(--accent-purple)]">$</span>
+        <span class="text-[var(--text-main)]">cat /dev/null/requested_buffer</span>
+      </div>
+
+      <div class="text-[var(--accent-red)] font-semibold pt-1">
+        bash: 404: Requested buffer or route does not exist in memory.
+      </div>
+
+      <div class="text-[var(--text-dim)] pt-2 border-t border-[var(--border-color)] leading-relaxed">
+        The requested endpoint has either been migrated, archived, or was mistyped. Choose an operation below to return to known memory addresses.
+      </div>
+    </div>
+
+    <!-- Navigation Recovery CTAs -->
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <a href="/" class="tui-btn tui-btn-primary">
+        <span>$ cd ~ (Return Home)</span>
+        <span>→</span>
+      </a>
+      <a href="/projects" class="tui-btn">
+        <span>$ ls ~/projects</span>
+      </a>
+      <a href="mailto:career.amraniahmedkhalil@gmail.com" class="tui-btn text-[var(--accent-yellow)]">
+        <span>✉ Report Dead Link</span>
+      </a>
+    </div>
+
+  </div>
+</BaseLayout>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PLACEHOLDER: Ensure this domain matches your site URL in astro.config.mjs
+Sitemap: https://amrani.dev/sitemap-index.xml

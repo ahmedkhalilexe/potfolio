@@ -60,13 +60,25 @@ const statusColors: Record<string, string> = {
       </div>
 
       <!-- Quick Action Buttons -->
-      <div class="flex items-center gap-2 font-mono text-xs">
-        <a href="/projects" class="tui-btn">
-          <span>cd ..</span>
-        </a>
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+        {project.data.github && (
+          <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="tui-btn text-[var(--accent-green)] hover:border-[var(--accent-green)]">
+            <span>⌥ git remote</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+        )}
+        {project.data.liveUrl && (
+          <a href={project.data.liveUrl} target="_blank" rel="noopener noreferrer" class="tui-btn tui-btn-primary">
+            <span>⚡ live demo</span>
+            <span class="text-[10px]">↗</span>
+          </a>
+        )}
         <button id="copy-url-btn" class="tui-btn">
           <span id="copy-text">Share URI</span>
         </button>
+        <a href="/projects" class="tui-btn">
+          <span>cd ..</span>
+        </a>
       </div>
     </div>
 

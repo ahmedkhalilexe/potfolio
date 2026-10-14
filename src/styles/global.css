@@ -220,6 +220,28 @@ body {
   font-size: 0.875em;
   border: 1px solid var(--border-color);
 }
+.tui-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.825rem;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.tui-prose th, .tui-prose td {
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+}
+.tui-prose th {
+  background: var(--bg-surface);
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+.tui-prose tr:nth-child(even) td {
+  background: var(--bg-surface);
+}
 /* Shiki Dual-Theme Synchronization */
 html:not(.light) .astro-code,
 html:not(.light) .astro-code span {

@@ -10,9 +10,11 @@ interface Props {
   metrics?: string[];
   architectureType?: string;
   featured?: boolean;
+  github?: string;
+  liveUrl?: string;
 }
 
-const { slug, title, tagline, role, status, tags, metrics, architectureType, featured } = Astro.props;
+const { slug, title, tagline, role, status, tags, metrics, architectureType, featured, github, liveUrl } = Astro.props;
 
 const statusColors: Record<string, string> = {
   'In Progress': 'border-[#e0af68] text-[#e0af68]',
@@ -32,9 +34,20 @@ const statusColors: Record<string, string> = {
           {title}
         </h3>
       </div>
-      <span class={`text-[10px] uppercase font-mono px-2 py-0.5 border ${statusColors[status] || 'border-[var(--border-color)]'}`}>
-        ● {status}
-      </span>
+      <div class="flex items-center gap-1.5 flex-wrap justify-end">
+        {github ? (
+          <span class="text-[10px] font-mono px-1.5 py-0.5 border border-[var(--accent-green)] text-[var(--accent-green)]">
+            ⌥ repo
+          </span>
+        ) : (
+          <span class="text-[10px] font-mono px-1.5 py-0.5 border border-[var(--text-dim)] text-[var(--text-dim)]">
+            🔒 client
+          </span>
+        )}
+        <span class={`text-[10px] uppercase font-mono px-2 py-0.5 border ${statusColors[status] || 'border-[var(--border-color)]'}`}>
+          ● {status}
+        </span>
+      </div>
     </div>
 
     <!-- Tagline & Role -->
